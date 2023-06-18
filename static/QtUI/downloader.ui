@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>420</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Museo Sans Cyrl 500</family>
+    <pointsize>14</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Dota 2 Patch Download Script Generator</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label_name">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>780</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Автоподбор манифестов для скрипта загрузки старых патчей Dota 2</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_patch">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>260</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ссылка на патч (SteamDB):</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_patch">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>100</y>
+      <width>490</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>160</y>
+      <width>761</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_output">
+         <property name="text">
+          <string>Место сохранения скрипта:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Выбрать</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_output">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Создать скрипт</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_about">
+    <property name="font">
+     <font>
+      <family>Museo Sans Cyrl 500</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Подробнее</string>
+    </property>
+    <addaction name="action_app"/>
+    <addaction name="action_author"/>
+   </widget>
+   <widget class="QMenu" name="menu_preferences">
+    <property name="font">
+     <font>
+      <family>Museo Sans Cyrl 500</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <widget class="QMenu" name="menu_theme">
+     <property name="font">
+      <font>
+       <family>Museo Sans Cyrl 500</family>
+      </font>
+     </property>
+     <property name="title">
+      <string>Тема</string>
+     </property>
+     <addaction name="action_theme_light"/>
+     <addaction name="action_theme_dark"/>
+    </widget>
+    <addaction name="menu_theme"/>
+   </widget>
+   <addaction name="menu_about"/>
+   <addaction name="menu_preferences"/>
+  </widget>
+  <action name="action_app">
+   <property name="text">
+    <string>О приложении</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Museo Sans Cyrl 500</family>
+    </font>
+   </property>
+  </action>
+  <action name="action_author">
+   <property name="text">
+    <string>Об авторе</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Museo Sans Cyrl 500</family>
+    </font>
+   </property>
+  </action>
+  <action name="action_theme_light">
+   <property name="text">
+    <string>Светлая</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Museo Sans Cyrl 500</family>
+    </font>
+   </property>
+  </action>
+  <action name="action_theme_dark">
+   <property name="text">
+    <string>Темная</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Museo Sans Cyrl 500</family>
+    </font>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

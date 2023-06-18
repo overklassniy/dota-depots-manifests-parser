@@ -1,0 +1,59 @@
+QMainWindow
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QWidget
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QLabel
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QLineEdit
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QPushButton
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QLabel#label_name
+{
+	font-family: "MS Shell Dlg 2";
+	font-size: 14pt;
+}
+
+QMenuBar
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
+
+QMenu
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 10pt;
+}
+
+QAction
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 8pt;
+}
+
+QStatusBar
+{
+	font-family: "MuseoSansCyrl";
+	font-size: 14pt;
+}
