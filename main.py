@@ -120,8 +120,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         msgBox.setWindowIcon(QIcon('static/png/info.png'))
         msgBox.setText('Автоподбор манифестов для скрипта загрузки старых патчей Dota 2')
         msgBox.setWindowTitle('О приложении')
-        msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
+        if self.version != 'NOT FOUND version.txt':
+            msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
 <a>Версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/tag/{self.version}'>{self.version}</a>""")
+        else:
+            msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
+<a>Версия: {self.version}</a>""")
         msgBox.exec()
 
     def browse_out(self):
