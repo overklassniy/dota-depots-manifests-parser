@@ -122,7 +122,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         msgBox.setWindowTitle('О приложении')
         if self.version != 'NOT FOUND version.txt':
             msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
-<a>Версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/tag/{self.version}'>{self.version}</a>""")
+<a>Версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{self.version}'>{self.version}</a>""")
         else:
             msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
 <a>Версия: {self.version}</a>""")
