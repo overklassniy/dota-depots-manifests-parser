@@ -11,12 +11,12 @@
     <br/>
     <br/>
     <a href="https://github.com/overklassniy/dota-depots-manifests-parser/issues">Report Bug</a>
-    .
+|
     <a href="https://github.com/overklassniy/dota-depots-manifests-parser/issues">Request Feature</a>
   </p>
 </p>
 
-![Downloads](https://img.shields.io/github/downloads/overklassniy/dota-depots-manifests-parser/total) ![Stargazers](https://img.shields.io/github/stars/overklassniy/dota-depots-manifests-parser?style=social) ![Issues](https://img.shields.io/github/issues/overklassniy/dota-depots-manifests-parser) 
+![Issues](https://img.shields.io/github/issues/overklassniy/dota-depots-manifests-parser) 
 
 ## Содержание
 
@@ -48,7 +48,7 @@
 1. Клонируйте репозиторий
 
 ```sh
-git clone https://github.com/your_username_/Project-Name.git
+git clone https://github.com/overklassniy/dota-depots-manifests-parser.git
 ```
 
 2. Установите Python библиотеки
@@ -84,5 +84,5 @@ python setup.py build
 
 ## Благодарности
 
-* [ShaanCoding](https://github.com/ShaanCoding/)
+* [ShaanCoding](https://github.com/ShaanCoding/ReadME-Generator)
 * [Marcelo Duarte](https://github.com/marcelotduarte/cx_Freeze)
