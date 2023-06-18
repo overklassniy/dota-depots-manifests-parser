@@ -57,7 +57,9 @@ git clone https://github.com/overklassniy/dota-depots-manifests-parser.git
 pip install -r .info/requirements.txt
 ```
 
-3. Запустите скрипт для сборки приложения
+3. Создайте файл `version.txt` с любым содержимым
+
+4. Запустите скрипт для сборки приложения
 ```sh
 python setup.py build
 ```
