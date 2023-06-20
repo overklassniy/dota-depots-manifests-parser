@@ -1,19 +1,21 @@
+import logging
 import os
 import sys
-import logging
+import winreg
+from datetime import datetime as dt
+
+import psutil
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QIcon
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QAction, QDialogButtonBox, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QAction, QMessageBox
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from datetime import datetime as dt
-from static import depot_URLs, month_dict, template
-from downloader_ui import Ui_MainWindow
 from selenium.webdriver.chrome.options import Options
-import psutil
-import winreg
-import webbrowser
+
+from downloader_ui import Ui_MainWindow
+from static import depot_URLs, month_dict, template
+
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -38,7 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if os.path.isdir(os.path.expandvars('%localappdata%/Google/Chrome/User Data')):
                 self.chrome_profile_path = str(os.path.expandvars(r'%localappdata%/Google/Chrome/User Data'))
             else:
-                QMessageBox.about(self, "Не найден путь к профилю Chrome", "У Вас не установлен путь к Вашему профилю Google Chrome. Пожалуйста, выберите папку, указанную в Вашем браузере на странице chrome://version (Путь к профилю)")
+                QMessageBox.about(self, "Не найден путь к профилю Chrome",
+                                  "У Вас не установлен путь к Вашему профилю Google Chrome. Пожалуйста, выберите папку, указанную в Вашем браузере на странице chrome://version (Путь к профилю)")
                 self.chrome_profile_path = QFileDialog.getExistingDirectory(self, 'Select')
             self.settings.write(self.chrome_profile_path)
             self.settings.close()
@@ -60,8 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.action_author.triggered.connect(self.author_msg)
         self.action_app.triggered.connect(self.app_msg)
 
-        self.pushButton.clicked.connect(self.browse_out)
-        self.pushButton_2.clicked.connect(self.create_download_script)
+        self.pushButton_create.clicked.connect(self.create_download_script)
 
         self.quit = QAction(self)
         self.quit.triggered.connect(self.closeEvent)
@@ -128,11 +130,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 <a>Версия: {self.version}</a>""")
         msgBox.exec()
 
-    def browse_out(self):
-        """Handler for the 'Browse' button to select the output script file."""
-        self.out_script, _ = QFileDialog.getSaveFileName(self, 'Select', 'script.txt', "Text files (*.txt)")
-        self.lineEdit_output.setText(self.out_script)
-
     def find_patch_timestamp(self, patch_url):
         """
         Find the patch timestamp based on the patch URL.
@@ -186,7 +183,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         try:
             registry_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
-                                              r"Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe")
+                                          r"Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe")
             value, _ = winreg.QueryValueEx(registry_key, "")
             return str(value).replace('\\', '/')
         except Exception as e:
@@ -198,6 +195,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         The script is saved in the selected output file.
         """
+        self.out_script, _ = QFileDialog.getSaveFileName(self, 'Выбрать', 'script.txt', "Text files (*.txt)")
         self.statusbar.clearMessage()
         for proc in psutil.process_iter(['name']):
             if "chrome" in proc.info['name'].lower():
@@ -208,9 +206,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         patch_url = self.lineEdit_patch.text()
         self.datetime_patch = self.find_patch_timestamp(patch_url)
         with open(self.out_script, 'w') as out_script:
-            for depot, depot_url in depot_URLs.items():
-                manifest = self.find_manifest(depot_url, self.datetime_patch.timestamp())
-                out_script.write(template[depot].replace('XXXXXXXXXXXXXXXXXX', manifest.strip().rstrip()) + '\n')
+           for depot, depot_url in depot_URLs.items():
+               manifest = self.find_manifest(depot_url, self.datetime_patch.timestamp())
+               out_script.write(template[depot].replace('XXXXXXXXXXXXXXXXXX', manifest.strip().rstrip()) + '\n')
         self.statusbar.showMessage('Скрипт создан!')
         self.statusbar.setStyleSheet("background-color: green; color: #eff0f1")
         self.web.close()
@@ -219,10 +217,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         Handler for the application close event.
 
-        Closes the web driver and saves the current theme to the settings file.
+        Closes the application and saves the current theme to the settings file.
         """
-        if self.web:
-            self.web.close()
         with open('settings.txt', 'w') as settings:
             settings.write(f'{self.theme}\n')
             settings.write(self.chrome_profile_path.replace('\\', '/'))

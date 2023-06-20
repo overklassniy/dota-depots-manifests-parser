@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'static/QtUI/downloader.ui'
+# Form implementation generated from reading ui file '.\static\QtUI\downloader.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,8 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 420)
-        MainWindow.setFixedSize(MainWindow.size())
+        MainWindow.resize(800, 290)
         font = QtGui.QFont()
         font.setFamily("Museo Sans Cyrl 500")
         font.setPointSize(14)
@@ -38,35 +37,15 @@ class Ui_MainWindow(object):
         self.lineEdit_patch = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_patch.setGeometry(QtCore.QRect(290, 100, 490, 40))
         self.lineEdit_patch.setObjectName("lineEdit_patch")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 160, 761, 171))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_output = QtWidgets.QLabel(self.verticalLayoutWidget)
-        self.label_output.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_output.setObjectName("label_output")
-        self.horizontalLayout.addWidget(self.label_output)
-        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        self.lineEdit_output = QtWidgets.QLineEdit(self.verticalLayoutWidget)
-        self.lineEdit_output.setReadOnly(True)
-        self.lineEdit_output.setObjectName("lineEdit_output")
-        self.verticalLayout.addWidget(self.lineEdit_output)
-        self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout.addWidget(self.pushButton_2)
+        self.pushButton_create = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_create.setGeometry(QtCore.QRect(20, 160, 760, 40))
+        self.pushButton_create.setObjectName("pushButton_create")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 800, 31))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 800, 25))
         self.menuBar.setObjectName("menuBar")
         self.menu_about = QtWidgets.QMenu(self.menuBar)
         font = QtGui.QFont()
@@ -117,12 +96,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Dota 2 Old Patch Download Script Generator"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Dota 2 Patch Download Script Generator"))
         self.label_name.setText(_translate("MainWindow", "Автоподбор манифестов для скрипта загрузки старых патчей Dota 2"))
         self.label_patch.setText(_translate("MainWindow", "Ссылка на патч (SteamDB):"))
-        self.label_output.setText(_translate("MainWindow", "Место сохранения скрипта:"))
-        self.pushButton.setText(_translate("MainWindow", "Выбрать"))
-        self.pushButton_2.setText(_translate("MainWindow", "Создать скрипт"))
+        self.pushButton_create.setText(_translate("MainWindow", "Создать скрипт"))
         self.menu_about.setTitle(_translate("MainWindow", "Подробнее"))
         self.menu_preferences.setTitle(_translate("MainWindow", "Настройки"))
         self.menu_theme.setTitle(_translate("MainWindow", "Тема"))
