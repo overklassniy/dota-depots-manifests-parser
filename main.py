@@ -5,6 +5,7 @@ import winreg
 from datetime import datetime as dt
 
 import psutil
+import requests
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QIcon
@@ -53,6 +54,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         except Exception as e:
             self.version = 'NOT FOUND version.txt'
 
+        self.version_check()
+
         self.datetime_patch = ''
         self.out_script = ''
         self.web = ''
@@ -72,6 +75,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Setup debug logging
         logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s [DEBUG] %(message)s')
+
+    def version_check(self):
+        # URL релиза репозитория на GitHub
+        releases_url = "https://api.github.com/repos/overklassniy/dota-depots-manifests-parser/releases/latest"
+        response = requests.get(releases_url).json()
+        latest_tag = response['tag_name']
+        if self.version != latest_tag:
+            msgBox = QMessageBox()
+            msgBox.setFont(self.font)
+            msgBox.setTextFormat(Qt.RichText)
+            msgBox.setWindowIcon(QIcon('static/png/warning.png.png'))
+            msgBox.setText('Доступна новая версия приложения!')
+            msgBox.setWindowTitle('У Вас старая версия...')
+            if self.version != 'NOT FOUND version.txt':
+                msgBox.setInformativeText(
+                    f"""<a>Установленная версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{self.version}'>{self.version}</a><br><br>
+            <a><a>Новейшая версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{latest_tag}'>{latest_tag}</a>""")
+            else:
+                msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
+            <a>Версия: {self.version}</a>""")
+            msgBox.exec()
 
     def set_theme(self, n):
         """
@@ -206,9 +230,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         patch_url = self.lineEdit_patch.text()
         self.datetime_patch = self.find_patch_timestamp(patch_url)
         with open(self.out_script, 'w') as out_script:
-           for depot, depot_url in depot_URLs.items():
-               manifest = self.find_manifest(depot_url, self.datetime_patch.timestamp())
-               out_script.write(template[depot].replace('XXXXXXXXXXXXXXXXXX', manifest.strip().rstrip()) + '\n')
+            for depot, depot_url in depot_URLs.items():
+                manifest = self.find_manifest(depot_url, self.datetime_patch.timestamp())
+                out_script.write(template[depot].replace('XXXXXXXXXXXXXXXXXX', manifest.strip().rstrip()) + '\n')
         self.statusbar.showMessage('Скрипт создан!')
         self.statusbar.setStyleSheet("background-color: green; color: #eff0f1")
         self.web.close()
