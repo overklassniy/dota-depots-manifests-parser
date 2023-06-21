@@ -226,6 +226,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 proc.kill()
         chrome_options = Options()
         chrome_options.add_argument(f'user-data-dir={self.chrome_profile_path}')
+        chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.web = webdriver.Chrome(options=chrome_options)
         patch_url = self.lineEdit_patch.text()
         self.datetime_patch = self.find_patch_timestamp(patch_url)
