@@ -4,6 +4,8 @@ import sys
 import winreg
 from datetime import datetime as dt
 
+import pytz
+import tzlocal
 import psutil
 import requests
 from PyQt5 import QtGui
@@ -82,20 +84,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         response = requests.get(releases_url).json()
         latest_tag = response['tag_name']
         if self.version != latest_tag:
-            msgBox = QMessageBox()
-            msgBox.setFont(self.font)
-            msgBox.setTextFormat(Qt.RichText)
-            msgBox.setWindowIcon(QIcon('static/png/warning.png.png'))
-            msgBox.setText('Доступна новая версия приложения!')
-            msgBox.setWindowTitle('У Вас старая версия...')
-            if self.version != 'NOT FOUND version.txt':
-                msgBox.setInformativeText(
-                    f"""<a>Установленная версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{self.version}'>{self.version}</a><br><br>
+            self.version_msg(latest_tag)
+
+    def version_msg(self, latest_tag):
+        msgBox = QMessageBox()
+        msgBox.setFont(self.font)
+        msgBox.setTextFormat(Qt.RichText)
+        msgBox.setWindowIcon(QIcon('static/png/warning.png.png'))
+        msgBox.setText('Доступна новая версия приложения!')
+        msgBox.setWindowTitle('У Вас старая версия...')
+        if self.version != 'NOT FOUND version.txt':
+            msgBox.setInformativeText(
+                f"""<a>Установленная версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{self.version}'>{self.version}</a><br><br>
             <a><a>Новейшая версия: </a><a href='https://github.com/overklassniy/dota-depots-manifests-parser/releases/tag/{latest_tag}'>{latest_tag}</a>""")
-            else:
-                msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
+        else:
+            msgBox.setInformativeText(f"""<a>Подробная инструкция по использованию приложения может быть найдена здесь: </a><a href='https://discord.gg/EvG3xHC9e5'><br>Dota Hub</a><br><br>
             <a>Версия: {self.version}</a>""")
-            msgBox.exec()
+        msgBox.exec()
 
     def set_theme(self, n):
         """
@@ -154,6 +159,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 <a>Версия: {self.version}</a>""")
         msgBox.exec()
 
+    def get_local_timezone(self):
+        local_tz = tzlocal.get_localzone()
+        return str(local_tz)
+
+    def get_timezone_offset(self, timezone_name):
+        now = dt.now()
+        local_timezone = pytz.timezone(timezone_name)
+        offset_minutes = local_timezone.utcoffset(now).total_seconds() // 60
+        return offset_minutes // 60
+
     def find_patch_timestamp(self, patch_url):
         """
         Find the patch timestamp based on the patch URL.
@@ -165,15 +180,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         - patch_timestamp (datetime.datetime): patch timestamp
         """
         patch_id = patch_url.split('/')[-2]
-        search_url = '/patchnotes/' + patch_id + '/'
+        search_url = f'/patchnotes/{patch_id}/'
         self.web.get('https://steamdb.info/app/570/patchnotes/')
         bs_patch = BeautifulSoup(self.web.page_source, 'html.parser')
         bs_patches = bs_patch.find_all('a', href=True)
         bs_patch_el = next((element for element in bs_patches if search_url in str(element)), None)
         bs_patch_el_parent = bs_patch_el.parent
         bs_patch_el_parent_parent = bs_patch_el_parent.parent
-        patch_timestamp = dt.fromtimestamp(float(str(bs_patch_el_parent_parent).split('\n')[0].split('"')[-2]) - 10800)
-        return patch_timestamp
+        return dt.fromtimestamp(
+            float(str(bs_patch_el_parent_parent).split('\n')[0].split('"')[-2]) - (
+                        3600 * self.get_timezone_offset(self.get_local_timezone()))
+        )
 
     def find_manifest(self, depot_url, patch_timestamp):
         """
@@ -211,7 +228,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             value, _ = winreg.QueryValueEx(registry_key, "")
             return str(value).replace('\\', '/')
         except Exception as e:
-            print("Error: ", str(e))
+            print("Error: ", e)
 
     def create_download_script(self):
         """
